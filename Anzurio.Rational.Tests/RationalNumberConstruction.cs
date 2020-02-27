@@ -12,7 +12,6 @@ namespace Anzurio.Rational.Tests
         [TestCase(-1)]
         [TestCase(0)]
         [TestCase(1)]
-
         public void ConstructRationalNumberFromWholeNumber(int wholeNumber)
         {
             var rationalNumber = new RationalNumber(wholeNumber);
@@ -46,7 +45,6 @@ namespace Anzurio.Rational.Tests
         [TestCase(-9, 6, -3, 2)] // -6/3 == -3/2
         [TestCase(12, 9, 4, 3)] // 12/9 == 4/3
         [TestCase(-12, 9, -4, 3)] // -12/9 == -4/3
-
         public void ConstructRationalNumber(
             int numerator,
             int denominator,
