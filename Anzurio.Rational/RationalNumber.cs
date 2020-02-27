@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Anzurio.Rational
 {
-    public class RationalNumber
+    public sealed class RationalNumber
     {
-        internal int Numerator { get; set; }
-        internal int Denominator { get; set; }
+        public int Numerator { get; internal set; }
+        public int Denominator { get; internal set; }
 
         public RationalNumber(int whole, int numerator, int denominator)
         {
