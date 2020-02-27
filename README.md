@@ -2,11 +2,20 @@
 
 This repository contains a .NET Core command line program written in C# that will take operations on fractions as an input and produce a fractional result.
 
+## Definition
+
+[Three projects](https://github.com/anzurio/RationalNumber/projects) were created to track the basic functionality of this application:
+
+- [Rational Number Representation](https://github.com/anzurio/RationalNumber/projects/4)
+- [Rational Number Arithmetic Operations](https://github.com/anzurio/RationalNumber/projects/3)
+- [Rational Number Arithmetic Operations Shell](https://github.com/anzurio/RationalNumber/projects/5)
+
 ## Components
 
 ```csharp
 // TODO
 ```
+
 
 ## Getting Started
 
