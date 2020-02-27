@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/RationalNumber/v15
+/.vs/RationalNumber/DesignTimeBuild
+/.vs/RationalNumber/v16
+/Anzurio.Rational/bin
+/Anzurio.Rational/obj
+/Anzurio.Rational.Tests/bin
+/Anzurio.Rational.Tests/obj
