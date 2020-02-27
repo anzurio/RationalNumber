@@ -25,7 +25,7 @@ namespace Anzurio.Rational
             numerator = Math.Abs(numerator);
             denominator = Math.Abs(denominator);
             
-            numerator = numerator + (whole * denominator);
+            numerator += (whole * denominator);
             var greatestCommonFactor = CalculateGreatestCommonFactor(numerator, denominator);
             greatestCommonFactor = greatestCommonFactor == 0 ? 1 : greatestCommonFactor;
 
