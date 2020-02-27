@@ -20,6 +20,9 @@ namespace Anzurio.Rational
             {
                 throw new InvalidRationalNumber();
             }
+
+            Numerator = numerator + (whole * denominator);
+            Denominator = denominator;
         }
 
         public RationalNumber(int numerator, int denominator)
