@@ -16,13 +16,21 @@ namespace Anzurio.Rational
             {
                 throw new NotARationalNumberException();
             }
-            if (!ContainsAtMostOneNegativeNumber(new []{whole, numerator, denominator }))
+            var negativeNumbers = CountNegativeNumbers(new[] { whole, numerator, denominator });
+            if (negativeNumbers > 1)
             {
                 throw new InvalidRationalNumber();
             }
+            whole = Math.Abs(whole);
+            numerator = Math.Abs(numerator);
+            denominator = Math.Abs(denominator);
+            
+            numerator = numerator + (whole * denominator);
+            var greatestCommonFactor = CalculateGreatestCommonFactor(numerator, denominator);
+            greatestCommonFactor = greatestCommonFactor == 0 ? 1 : greatestCommonFactor;
 
-            Numerator = numerator + (whole * denominator);
-            Denominator = denominator;
+            Numerator = (numerator / greatestCommonFactor) * (negativeNumbers == 1 ? -1 : 1);
+            Denominator = denominator / greatestCommonFactor;
         }
 
         public RationalNumber(int numerator, int denominator)
@@ -37,9 +45,26 @@ namespace Anzurio.Rational
 
         }
 
-        private static bool ContainsAtMostOneNegativeNumber(IEnumerable<int> numbers)
+        public static int CalculateGreatestCommonFactor(int numerator, int denominator)
         {
-            return numbers.Count(n => n < 0) <= 1;
+            while (numerator != 0 && denominator != 0)
+            {
+                if (numerator > denominator)
+                {
+                    numerator %= denominator;
+                }
+                else
+                {
+                    denominator %= numerator;
+                }
+            }
+
+            return Math.Max(denominator, numerator);
+        }
+
+        private static int CountNegativeNumbers(IEnumerable<int> numbers)
+        {
+            return numbers.Count(n => n < 0);
         }
     }
 }
