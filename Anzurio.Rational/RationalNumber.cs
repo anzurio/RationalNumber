@@ -47,12 +47,23 @@ namespace Anzurio.Rational
         
         public override string ToString()
         {
-            throw new NotImplementedException();
+            var absoluteNumerator = Math.Abs(Numerator);
+            if (Denominator == 1 || Numerator == 0 || absoluteNumerator < Denominator)
+            {
+                return ToImproperFractionString();
+            }
+            else
+            {
+                var sign = Numerator < 0 ? "-" : string.Empty;
+                var whole = $"{absoluteNumerator / Denominator}";
+                var remainder = absoluteNumerator % Denominator;
+                return $"{sign}{whole}_{remainder}/{Denominator}";
+            }
         }
 
         public string ToImproperFractionString()
         {
-            if (Denominator == 1)
+            if (Denominator == 1 || Numerator == 0)
             {
                 return $"{Numerator}";
             }
