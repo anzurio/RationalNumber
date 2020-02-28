@@ -82,7 +82,7 @@ namespace Anzurio.Rational
 
         public static RationalNumber operator*(RationalNumber lhs, RationalNumber rhs)
         {
-            throw new NotImplementedException();
+            return new RationalNumber(lhs.Numerator * rhs.Numerator, lhs.Denominator * rhs.Denominator);
         }
 
         public static RationalNumber Parse(string s)
