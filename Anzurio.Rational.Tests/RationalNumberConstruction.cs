@@ -24,6 +24,12 @@ namespace Anzurio.Rational.Tests
         [TestCase(0, 1, 2, 1, 2)] // 0_1/2 == 1/2
         [TestCase(1, 2, 4, 3, 2)] // 1_2/4 == 3/2
         [TestCase(-1, 2, 4, -3, 2)] // -1_2/4 == -3/2
+        [TestCase(2, 2, 2, 3, 1)]
+        [TestCase(-2, 2, 2, -3, 1)]
+        [TestCase(0, 0, 4, 0, 1)]
+        [TestCase(0, 0, -4, 0, 1)]
+        [TestCase(7, 0, 4, 7, 1)]
+        [TestCase(7, 0, -4, -7, 1)]
         public void ConstructRationalNumberProvidingWholeNumberPlusFraction(
             int wholeNumber, 
             int numerator, 
@@ -45,6 +51,10 @@ namespace Anzurio.Rational.Tests
         [TestCase(-9, 6, -3, 2)] // -6/3 == -3/2
         [TestCase(12, 9, 4, 3)] // 12/9 == 4/3
         [TestCase(-12, 9, -4, 3)] // -12/9 == -4/3
+        [TestCase(2, 2, 1, 1)]
+        [TestCase(-2, 2, -1, 1)]
+        [TestCase(0, 4, 0, 1)]
+        [TestCase(0, -4, 0, 1)]
         public void ConstructRationalNumber(
             int numerator,
             int denominator,

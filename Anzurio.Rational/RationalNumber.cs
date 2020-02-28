@@ -25,7 +25,7 @@ namespace Anzurio.Rational
             numerator = Math.Abs(numerator);
             denominator = Math.Abs(denominator);
             
-            numerator = numerator + (whole * denominator);
+            numerator += (whole * denominator);
             var greatestCommonFactor = CalculateGreatestCommonFactor(numerator, denominator);
             greatestCommonFactor = greatestCommonFactor == 0 ? 1 : greatestCommonFactor;
 
@@ -43,6 +43,34 @@ namespace Anzurio.Rational
             : this(whole, 1)
         {
 
+        }
+        
+        public override string ToString()
+        {
+            var absoluteNumerator = Math.Abs(Numerator);
+            if (Denominator == 1 || Numerator == 0 || absoluteNumerator < Denominator)
+            {
+                return ToImproperFractionString();
+            }
+            else
+            {
+                var sign = Numerator < 0 ? "-" : string.Empty;
+                var whole = $"{absoluteNumerator / Denominator}";
+                var remainder = absoluteNumerator % Denominator;
+                return $"{sign}{whole}_{remainder}/{Denominator}";
+            }
+        }
+
+        public string ToImproperFractionString()
+        {
+            if (Denominator == 1 || Numerator == 0)
+            {
+                return $"{Numerator}";
+            }
+            else
+            {
+                return $"{Numerator}/{Denominator}";
+            }
         }
 
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
