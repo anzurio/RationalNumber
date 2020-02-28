@@ -67,7 +67,7 @@ namespace Anzurio.Rational.Tests
         }
 
         [TestCase]
-        public void ConstructNotANumberRationalNumber()
+        public void AttemptToConstructNotANumberRationalNumber()
         {
             Action createNotANumberRational = () => new RationalNumber(1, 0);
             Action createNotANumberRationalWithWholeNumber = () => new RationalNumber(0, 1, 0);
@@ -81,7 +81,7 @@ namespace Anzurio.Rational.Tests
         [TestCase(-1, 1, -1)]
         [TestCase(-1, -1, 1)]
         [TestCase(-1, -1, -1)]
-        public void ConstructInvalidRationalNumberByRepeatedMinusSign(
+        public void AttemptToConstructInvalidRationalNumberByRepeatedMinusSign(
             int numerator,
             int denominator,
             int? wholeNumber)
