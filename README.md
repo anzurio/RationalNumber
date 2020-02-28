@@ -31,7 +31,15 @@ In order to being able to run this application, .NET Core **MUST** be installed 
 
 ### Running Tests
 
-```csharp
-// TODO
+In order to run the test cases of the solution in the command line, execute the following from this repository's root folder:
+
+```
+> dotnet test RationalNumber.sln
+```
+
+Alternatively, you may run directly from the [Test Folder](./Anzurio.Rational.Tests):
+
+```
+> dotnet test Anzurio.Rational.Tests.csproj
 ```
 
