@@ -51,8 +51,8 @@ namespace Anzurio.Rational.Tests
         [TestCase(null, -1, 2, "-1/2")] // -1/2 == -1/2
         [TestCase(null, 1, 2, "1/2")] // 1/2 == 1/2
         [TestCase(null, 3, 2, "3/2")] // 3/2 == 3/2
-        [TestCase(null, 6, 3, "2/1")] // 6/3 == 2/1
-        [TestCase(null, -6, 3, "-2/1")] // -6/3 == -2/1
+        [TestCase(null, 6, 3, "2")] // 6/3 == 2
+        [TestCase(null, -6, 3, "-2")] // -6/3 == -2
         [TestCase(null, 9, 6, "3/2")] // 9/6 == 3/2
         [TestCase(null, -9, 6, "-3/2")] // -6/3 == -3/2
         [TestCase(null, 12, 9, "4/3")] // 12/9 == 4/3

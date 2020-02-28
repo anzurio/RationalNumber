@@ -52,7 +52,14 @@ namespace Anzurio.Rational
 
         public string ToImproperFractionString()
         {
-            throw new NotImplementedException();
+            if (Denominator == 1)
+            {
+                return $"{Numerator}";
+            }
+            else
+            {
+                return $"{Numerator}/{Denominator}";
+            }
         }
 
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
