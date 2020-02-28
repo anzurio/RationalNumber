@@ -98,6 +98,11 @@ namespace Anzurio.Rational
                 lhs.Denominator * rhs.Numerator * (areBothSidesNegative ? -1 : 1));
         }
 
+        public static RationalNumber operator +(RationalNumber lhs, RationalNumber rhs)
+        {
+            throw new NotImplementedException();
+        }
+
         public static RationalNumber Parse(string s)
         {
             if (s == null)
