@@ -73,6 +73,25 @@ namespace Anzurio.Rational
             }
         }
 
+        public static RationalNumber Parse(string s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool TryParse(string s, out RationalNumber result)
+        {
+            try
+            {
+                result = Parse(s);
+                return true;
+            }
+            catch (Exception)
+            {
+                result = null;
+                return false;
+            }
+        }
+
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
         {
             while (numerator != 0 && denominator != 0)
