@@ -44,6 +44,16 @@ namespace Anzurio.Rational
         {
 
         }
+        
+        public override string ToString()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ToImproperFractionString()
+        {
+            throw new NotImplementedException();
+        }
 
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
         {
