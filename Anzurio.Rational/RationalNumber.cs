@@ -87,7 +87,15 @@ namespace Anzurio.Rational
 
         public static RationalNumber operator/(RationalNumber lhs, RationalNumber rhs)
         {
-            throw new NotImplementedException();
+            if (rhs.Numerator == 0)
+            {
+                throw new DivideByZeroException();
+            }
+            var areBothSidesNegative = lhs.Numerator < 0 && rhs.Numerator < 0;
+
+            return new RationalNumber(
+                lhs.Numerator * rhs.Denominator * (areBothSidesNegative ? -1 : 1), 
+                lhs.Denominator * rhs.Numerator * (areBothSidesNegative ? -1 : 1));
         }
 
         public static RationalNumber Parse(string s)
