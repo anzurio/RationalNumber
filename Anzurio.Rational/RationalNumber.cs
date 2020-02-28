@@ -85,6 +85,11 @@ namespace Anzurio.Rational
             return new RationalNumber(lhs.Numerator * rhs.Numerator, lhs.Denominator * rhs.Denominator);
         }
 
+        public static RationalNumber operator/(RationalNumber lhs, RationalNumber rhs)
+        {
+            throw new NotImplementedException();
+        }
+
         public static RationalNumber Parse(string s)
         {
             if (s == null)

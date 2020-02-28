@@ -40,5 +40,48 @@ namespace Anzurio.Rational.Tests
             (lhs * rhs).ToString().Should().Be(desiredOutput);
         }
 
+        [TestCase("1", "1/2", "2")]
+        [TestCase("-1", "1/2", "-2")]
+        [TestCase("1", "-1/2", "-2")]
+        [TestCase("-1/2", "-1/2", "1")]
+        [TestCase("1/2", "1/2", "1")]
+        [TestCase("-1/2", "1/2", "-1")]
+        [TestCase("-5_1/2", "1/2", "-11")]
+        [TestCase("-5_1/2", "-1/2", "11")]
+        [TestCase("5_1/2", "-1/2", "-11")]
+        [TestCase("3/9", "9", "1/27")]
+        [TestCase("-9", "3/9", "-27")]
+        [TestCase("0", "1/2", "0")]
+        [TestCase("-0/4", "1/2", "0")]
+        [TestCase("-0/4", "-1/2", "0")]
+        [TestCase("2", "5", "2/5")]
+        [TestCase("-2", "5", "-2/5")]
+        [TestCase("1/7", "1/5", "5/7")]
+        [TestCase("1/7", "-1/5", "-5/7")]
+        [TestCase("10_1/10", "1_5/10", "6_11/15")]
+        [TestCase("10_1/10", "-1_5/10", "-6_11/15")]
+        public void PerfomDivision(string leftHandSide, string rightHandSide, string desiredOutput)
+        {
+            var lhs = RationalNumber.Parse(leftHandSide);
+            var rhs = RationalNumber.Parse(rightHandSide);
+            (lhs / rhs).ToString().Should().Be(desiredOutput);
+        }
+
+        [TestCase("1")]
+        [TestCase("-1")]
+        [TestCase("1_1/2")]
+        [TestCase("-1_1/2")]
+        [TestCase("3/2")]
+        [TestCase("-3/2")]
+        [TestCase("1/2")]
+        [TestCase("-1/2")]
+        public void AttemptToPerformDivisionByZero(string leftHandSide)
+        {
+            var lhs = RationalNumber.Parse(leftHandSide);
+            var rhs = RationalNumber.Parse("0");
+            Func<RationalNumber> fx = () => lhs / rhs;
+            fx.Should().Throw<DivideByZeroException>();
+        }
+
     }
 }
