@@ -109,27 +109,7 @@ namespace Anzurio.Rational
             var match = regEx.Match(trimmedString);
             if (match.Success)
             {
-                if (match.Groups[WholeOnlyGroupId].Success)
-                {
-                    return new RationalNumber(int.Parse(match.Groups[WholeOnlyGroupId].Value));
-                }
-                string wholeString = "0";
-                string fractionString;
-                if (match.Groups[MixedGroupId].Success) 
-                {
-                    var underscoreSplittedStrings = match.Groups[MixedGroupId].Value.Split('_');
-                    wholeString = underscoreSplittedStrings[0];
-                    fractionString = underscoreSplittedStrings[1];
-                }
-                else
-                {
-                    fractionString = match.Groups[FractionOnlyGroupId].Value;
-                }
-                var slashSplittedStrings = fractionString.Split('/');
-                var whole = int.Parse(wholeString);
-                var numerator = int.Parse(slashSplittedStrings[0]);
-                var denominator = int.Parse(slashSplittedStrings[1]);
-                return new RationalNumber(whole, numerator, denominator);
+                return CreateRationalNumberFromRegexMatch(match);
             }
             else
             {
@@ -167,6 +147,31 @@ namespace Anzurio.Rational
             }
 
             return Math.Max(denominator, numerator);
+        }
+
+        private static RationalNumber CreateRationalNumberFromRegexMatch(Match match)
+        {
+            if (match.Groups[WholeOnlyGroupId].Success)
+            {
+                return new RationalNumber(int.Parse(match.Groups[WholeOnlyGroupId].Value));
+            }
+            string wholeString = "0";
+            string fractionString;
+            if (match.Groups[MixedGroupId].Success)
+            {
+                var underscoreSplittedStrings = match.Groups[MixedGroupId].Value.Split('_');
+                wholeString = underscoreSplittedStrings[0];
+                fractionString = underscoreSplittedStrings[1];
+            }
+            else
+            {
+                fractionString = match.Groups[FractionOnlyGroupId].Value;
+            }
+            var slashSplittedStrings = fractionString.Split('/');
+            var whole = int.Parse(wholeString);
+            var numerator = int.Parse(slashSplittedStrings[0]);
+            var denominator = int.Parse(slashSplittedStrings[1]);
+            return new RationalNumber(whole, numerator, denominator);
         }
 
         private static int CountNegativeNumbers(IEnumerable<int> numbers)
