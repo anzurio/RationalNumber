@@ -30,6 +30,10 @@ namespace Anzurio.Rational.Tests
         [TestCase(null, -2, 2, "-1")]
         [TestCase(1, 2, 2, "2")]
         [TestCase(1, -2, 2, "-2")]
+        [TestCase(0, 0, 5, "0")]
+        [TestCase(0, 0, -5, "0")]
+        [TestCase(null, 0, 5, "0")]
+        [TestCase(null, 0, -5, "0")]
         public void ConstructProperFractionStringRepresentation(
             int? whole,
             int numerator,
@@ -61,6 +65,10 @@ namespace Anzurio.Rational.Tests
         [TestCase(null, -2, 2, "-1")]
         [TestCase(1, 2, 2, "2")]
         [TestCase(1, -2, 2, "-2")]
+        [TestCase(0, 0, 5, "0")]
+        [TestCase(0, 0, -5, "0")]
+        [TestCase(null, 0, 5, "0")]
+        [TestCase(null, 0, -5, "0")]
         public void ConstructImproperFractionStringRepresentation(
             int? whole,
             int numerator,
