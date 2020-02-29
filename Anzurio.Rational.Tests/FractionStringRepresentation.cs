@@ -76,7 +76,7 @@ namespace Anzurio.Rational.Tests
             string expectedResult)
         {
             var rationalNumber = new RationalNumber(whole ?? 0, numerator, denominator);
-            rationalNumber.ToImproperFractionString().Should().Be(expectedResult);
+            rationalNumber.ToRationalString().Should().Be(expectedResult);
         }
     }
 }
