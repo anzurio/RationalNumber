@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace Anzurio.Rational
 {
+    /// <summary>
+    /// A class that represents a Rational Number.
+    /// </summary>
     public sealed class RationalNumber
     {
         private const string WholeOnlyGroupId = "wholeonly";
@@ -22,9 +25,23 @@ namespace Anzurio.Rational
             @"\s{1}[-/\+\*]\s{1})" +
             $"(?<{RightOperandGroupId}>.+$)";
 
+        /// <summary>
+        /// The numerator of the rational number.
+        /// </summary>
         public int Numerator { get; internal set; }
+        /// <summary>
+        /// The denominator of the rational number.
+        /// </summary>
         public int Denominator { get; internal set; }
 
+        /// <summary>
+        /// Creates a RationalNumber by providing a whole number (which may be zero) and a fraction.
+        /// </summary>
+        /// <param name="whole">A whole number.</param>
+        /// <param name="numerator">The numerator of the fraction.</param>
+        /// <param name="denominator">The denominator of the fraction.</param>
+        /// <exception cref="NotARationalNumberException"><paramref name="denominator"/> is zero.</exception>
+        /// <exception cref="InvalidRationalNumber">More than one of the parameters is negative.</exception>
         public RationalNumber(int whole, int numerator, int denominator)
         {
             if (denominator == 0)
@@ -48,24 +65,39 @@ namespace Anzurio.Rational
             Denominator = denominator / greatestCommonFactor;
         }
 
+        /// <summary>
+        /// Creates a RationalNumber by providing a fraction.
+        /// </summary>
+        /// <param name="numerator">The numerator of the fraction.</param>
+        /// <param name="denominator">The denominator of the fraction.</param>
+        /// <exception cref="NotARationalNumberException"><paramref name="denominator"/> is zero.</exception>
+        /// <exception cref="InvalidRationalNumber">More than one of the parameters is negative.</exception>
         public RationalNumber(int numerator, int denominator)
             : this(0, numerator, denominator)
         {
 
         }
 
+        /// <summary>
+        /// Creates a RationalNumber by providing a whole number.
+        /// </summary>
+        /// <param name="whole">A whole number.</param>
         public RationalNumber(int whole) 
             : this(whole, 1)
         {
 
         }
         
+        /// <summary>
+        /// Returns a reduced proper fraction representation of this Rational Number.
+        /// </summary>
+        /// <returns>A string representing the reduced proper fraction of this Rational Number.</returns>
         public override string ToString()
         {
             var absoluteNumerator = Math.Abs(Numerator);
             if (Denominator == 1 || Numerator == 0 || absoluteNumerator < Denominator)
             {
-                return ToImproperFractionString();
+                return ToRationalString();
             }
             else
             {
@@ -76,7 +108,11 @@ namespace Anzurio.Rational
             }
         }
 
-        public string ToImproperFractionString()
+        /// <summary>
+        /// Returns a string representation of this Rational Number.
+        /// </summary>
+        /// <returns>A string representing this Rational Number.</returns>
+        public string ToRationalString()
         {
             if (Denominator == 1 || Numerator == 0)
             {
@@ -88,13 +124,31 @@ namespace Anzurio.Rational
             }
         }
 
+        /// <summary>
+        /// Multiplies two Rational Numbers.
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation.</param>
+        /// <param name="rhs">The right hand side of the operation.</param>
+        /// <exception cref="ArgumentNullException">Either parameter is null.</exception>
+        /// <returns>The result of the multiplication.</returns>
         public static RationalNumber operator*(RationalNumber lhs, RationalNumber rhs)
         {
+            ValidateOperandsNotNullOrThrow(lhs, rhs);
+            
             return new RationalNumber(lhs.Numerator * rhs.Numerator, lhs.Denominator * rhs.Denominator);
         }
 
+        /// <summary>
+        /// Divides two Rational Numbers.
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation.</param>
+        /// <param name="rhs">The right hand side of the operation.</param>
+        /// <exception cref="ArgumentNullException">Either parameter is null.</exception>
+        /// <exception cref="DivideByZeroException">The <paramref name="rhs"/> is equivalent to zero.</exception>
+        /// <returns>The result of the division.</returns>
         public static RationalNumber operator/(RationalNumber lhs, RationalNumber rhs)
         {
+            ValidateOperandsNotNullOrThrow(lhs, rhs);
             if (rhs.Numerator == 0)
             {
                 throw new DivideByZeroException();
@@ -106,20 +160,49 @@ namespace Anzurio.Rational
                 lhs.Denominator * rhs.Numerator * (areBothSidesNegative ? -1 : 1));
         }
 
+        /// <summary>
+        /// Sums two Rational Numbers.
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation.</param>
+        /// <param name="rhs">The right hand side of the operation.</param>
+        /// <exception cref="ArgumentNullException">Either parameter is null.</exception>
+        /// <returns>The result of the sum.</returns>
         public static RationalNumber operator +(RationalNumber lhs, RationalNumber rhs)
         {
+            ValidateOperandsNotNullOrThrow(lhs, rhs);
             return new RationalNumber(
                 (lhs.Numerator * rhs.Denominator) + (lhs.Denominator * rhs.Numerator),
                 lhs.Denominator * rhs.Denominator);
         }
 
+        /// <summary>
+        /// Substracts two Rational Numbers.
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation.</param>
+        /// <param name="rhs">The right hand side of the operation.</param>
+        /// <exception cref="ArgumentNullException">Either parameter is null.</exception>
+        /// <returns>The result of the substraction.</returns>
         public static RationalNumber operator -(RationalNumber lhs, RationalNumber rhs)
         {
+            ValidateOperandsNotNullOrThrow(lhs, rhs);
             return new RationalNumber(
                 (lhs.Numerator * rhs.Denominator) - (lhs.Denominator * rhs.Numerator),
                 lhs.Denominator * rhs.Denominator);
         }
 
+        /// <summary>
+        /// Converts the string representation of a fraction to an equivalent Rational Numbers.
+        /// </summary>
+        /// <param name="s">A string containing a fraction to convert.</param>
+        /// <remarks>
+        /// <p>For consistency to other Parse methods in .NET, 0_0/3 and 0_1/3 are valid representations of a fractions (e.g., <code>double.Parse("0.0");</code>).</p>
+        /// <p>To avoid ambiguity, the minus sign to represent a negative number, must always be at the beginning of the fraction.</p>
+        /// <p>Using a whole number and an improper fraction is valid as  3_2/3 is mathematically equivalent to 3 + 2/3 thus so would be 3_4/3.</p>
+        /// </remarks>
+        /// <returns>A Rational Number equivalent to the fraction specified in <paramref name="s"/></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
+        /// <exception cref="FormatException"><paramref name="s"/> is not in a correct format.</exception>
+        /// <exception cref="OverflowException">Any numeric element of <paramref name="s"/> is larger than the numeric bounds.</exception>
         public static RationalNumber Parse(string s)
         {
             if (s == null)
@@ -139,6 +222,14 @@ namespace Anzurio.Rational
             }
         }
 
+        /// <summary>
+        /// Converts the string representation of a fraction to an equivalent Rational Numbers. 
+        /// A return value indicates whether the operation succeeded. This method calls <see cref="RationalNumber.Parse(string)"/>;
+        /// see that method documentation for more information.
+        /// </summary>
+        /// <param name="s">A string containing a fraction to convert.</param>
+        /// <param name="result">If the conversion is successful, it contains the result of the conversion.</param>
+        /// <returns>true if the conversion was successful.</returns>
         public static bool TryParse(string s, out RationalNumber result)
         {
             try
@@ -153,6 +244,15 @@ namespace Anzurio.Rational
             }
         }
 
+        /// <summary>
+        /// Converts an Arithmetic operation between two and only two Rational Numbers and solves the operation.
+        /// </summary>
+        /// <param name="expression">The expression representing the arithmetic operation to be performed.</param>
+        /// <returns>The resulting value of performing the operation.</returns>
+        /// <exception cref="InvalidOperationException">A valid operator is not present or not surrounded by spaces.</exception>
+        /// <exception cref="FormatException">Either operand is not in a correct format.</exception>
+        /// <exception cref="OverflowException">Any numeric component of either operand is larger than the numeric bounds.</exception>
+        /// <exception cref="DivideByZeroException">The right operand is equivalent to zero.</exception>
         public static RationalNumber SolveArithmeticExpression(string expression)
         {
             var regEx = new Regex(RegularExpressionArithmeticExpressionPattern);
@@ -189,7 +289,7 @@ namespace Anzurio.Rational
             }
         }
 
-        public static int CalculateGreatestCommonFactor(int numerator, int denominator)
+        private static int CalculateGreatestCommonFactor(int numerator, int denominator)
         {
             while (numerator != 0 && denominator != 0)
             {
@@ -263,6 +363,18 @@ namespace Anzurio.Rational
         private static int CountNegativeNumbers(IEnumerable<int> numbers)
         {
             return numbers.Count(n => n < 0);
+        }
+
+        private static void ValidateOperandsNotNullOrThrow(RationalNumber lhs, RationalNumber rhs)
+        {
+            if (lhs == null)
+            {
+                throw new ArgumentNullException(nameof(lhs));
+            }
+            if (rhs == null)
+            {
+                throw new ArgumentNullException(nameof(rhs));
+            }
         }
     }
 }

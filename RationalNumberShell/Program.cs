@@ -74,6 +74,11 @@ namespace RationalNumberShell
             Console.WriteLine("- Missing either numerator or denominator of a fraction (e.g., /3, 2/, 5_2/");
             Console.WriteLine("- Spaces (e.g., 3_ 2/3, 3 _2/3, 10 /4)");
             Console.WriteLine("- Minus sign anywhere except at the start of the string (e.g., 2/-3, 3_-1/3");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Remarks:");
+            Console.WriteLine("For consistency to other Parse methods in .NET-based shells, 0_0/3 and 0_1/3 are valid representations of a fractions (e.g., double.Parse(\"0.0\");)");
+            Console.WriteLine("To avoid ambiguity, the minus sign to represent a negative number, must always be at the beginning of the fraction.");
+            Console.WriteLine("Using a whole number and an improper fraction is valid as  3_2/3 is mathematically equivalent to 3 + 2/3 thus so would be 3_4/3.</p>");
             Console.ResetColor();
         }
     }

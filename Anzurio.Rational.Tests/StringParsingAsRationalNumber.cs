@@ -36,7 +36,7 @@ namespace Anzurio.Rational.Tests
         {
             var isValidFractionString = RationalNumber.TryParse(rationalNumber, out RationalNumber result);
             isValidFractionString.Should().BeTrue();
-            result.ToImproperFractionString().Should().Be(expectedResult);
+            result.ToRationalString().Should().Be(expectedResult);
         }
 
         [TestCase("7/-9")]
