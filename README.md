@@ -12,16 +12,15 @@ This repository contains a .NET Core command line program written in C# that wil
 
 ## Components
 
-```csharp
-// TODO
-```
-
+- [Rational Number Library](./Anzurio.Rational) contains a RationalNumber class that represents a Rational Number and is able to parse fractions in the following syntax `[whole_]numerator/denominatory`.
+- [Rational Number Tests Library](./Anzurio.Rational.Tests) contains basic unit tests using NUnit and FluentAssertions.
+- [Rational Number Shell](./RationalNumberShell) contains a basic command line shell to solve arithmetic operations between two fractions.
 
 ## Getting Started
 
 ### Prerequistes
 
-In order to being able to run this application, .NET Core 2.2 or newer **MUST** be installed in your computer with the `dotnet` command line tool.
+In order to to run these projects, .NET Core 2.2 or newer **MUST** be installed in your computer along with the `dotnet` command line tool.
 
 ### Running the Application
 
