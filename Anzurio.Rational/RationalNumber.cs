@@ -11,8 +11,16 @@ namespace Anzurio.Rational
         private const string WholeOnlyGroupId = "wholeonly";
         private const string FractionOnlyGroupId = "fractiononly";
         private const string MixedGroupId = "mixed";
+        private const string LeftOperandGroupId = "lhs";
+        private const string RightOperandGroupId = "rhs";
+        private const string OperatorGroupId = "operator";
+
         private static readonly string RegularExpressionPattern = 
             $@"^((?<{WholeOnlyGroupId}>-?\d+)|(?<{FractionOnlyGroupId}>-?\d+/\d+)|(?<{MixedGroupId}>-?\d+_\d+/\d+))$";
+        private static readonly string RegularExpressionArithmeticExpressionPattern =
+            $"(?<{LeftOperandGroupId}>^.+)(?<{OperatorGroupId}>" + 
+            @"\s{1}[-/\+\*]\s{1})" +
+            $"(?<{RightOperandGroupId}>.+$)";
 
         public int Numerator { get; internal set; }
         public int Denominator { get; internal set; }
@@ -123,12 +131,11 @@ namespace Anzurio.Rational
             var match = regEx.Match(trimmedString);
             if (match.Success)
             {
-                return CreateRationalNumberFromRegexMatch(match);
+                return CreateRationalNumberFromRegexSuccessfulMatch(match);
             }
             else
             {
-                // TODO Custom message
-                throw new FormatException();
+                throw new FormatException("Input string was not in a correct format.");
             }
         }
 
@@ -146,9 +153,29 @@ namespace Anzurio.Rational
             }
         }
 
-        public static RationalNumber SolverArithmeticExpression(string str)
+        public static RationalNumber SolveArithmeticExpression(string expression)
         {
-            throw new NotImplementedException();
+            var regEx = new Regex(RegularExpressionArithmeticExpressionPattern);
+            var match = regEx.Match(expression);
+            if (match.Success)
+            {
+                var op = match.Groups[OperatorGroupId].Value;
+                var (leftOperand, rightOperand) = GetOperandsFromRegexSuccessfulMatch(match);
+
+                var result = op switch
+                {
+                    " - " => leftOperand - rightOperand,
+                    " * " => leftOperand * rightOperand,
+                    " / " => leftOperand / rightOperand,
+                    _ => leftOperand + rightOperand
+                };
+                return result;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "One operator must be present and it must be surrounded by spaces.");
+            }
         }
 
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
@@ -168,7 +195,7 @@ namespace Anzurio.Rational
             return Math.Max(denominator, numerator);
         }
 
-        private static RationalNumber CreateRationalNumberFromRegexMatch(Match match)
+        private static RationalNumber CreateRationalNumberFromRegexSuccessfulMatch(Match match)
         {
             if (match.Groups[WholeOnlyGroupId].Success)
             {
@@ -191,6 +218,35 @@ namespace Anzurio.Rational
             var numerator = int.Parse(slashSplittedStrings[0]);
             var denominator = int.Parse(slashSplittedStrings[1]);
             return new RationalNumber(whole, numerator, denominator);
+        }
+
+        private static (RationalNumber leftOperand, RationalNumber rightOperand) GetOperandsFromRegexSuccessfulMatch(Match match)
+        {
+            RationalNumber leftOperand, rightOperand;
+            var lhs = match.Groups[LeftOperandGroupId].Value.Trim();
+            var rhs = match.Groups[RightOperandGroupId].Value.Trim();
+           
+            try
+            {
+                leftOperand = Parse(lhs);
+            }
+            catch (Exception leftOperandException)
+            {
+                throw new InvalidOperationException(
+                    $"Error on left operand \"{lhs}\": {Environment.NewLine}{leftOperandException.Message}");
+            }
+
+            try
+            {
+                rightOperand = Parse(rhs);
+            }
+            catch (Exception rightOperandException)
+            {
+                throw new InvalidOperationException(
+                    $"Error on right operand \"{rhs}\": {Environment.NewLine}{rightOperandException.Message}");
+            }
+
+            return (leftOperand, rightOperand);
         }
 
         private static int CountNegativeNumbers(IEnumerable<int> numbers)
