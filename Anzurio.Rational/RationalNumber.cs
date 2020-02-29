@@ -146,6 +146,11 @@ namespace Anzurio.Rational
             }
         }
 
+        public static RationalNumber SolverArithmeticExpression(string str)
+        {
+            throw new NotImplementedException();
+        }
+
         public static int CalculateGreatestCommonFactor(int numerator, int denominator)
         {
             while (numerator != 0 && denominator != 0)
