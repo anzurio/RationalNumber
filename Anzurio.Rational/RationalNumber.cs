@@ -162,6 +162,7 @@ namespace Anzurio.Rational
                 var op = match.Groups[OperatorGroupId].Value;
                 var (leftOperand, rightOperand) = GetOperandsFromRegexSuccessfulMatch(match);
 
+#if NETCOREAPP3_0
                 var result = op switch
                 {
                     " - " => leftOperand - rightOperand,
@@ -169,6 +170,16 @@ namespace Anzurio.Rational
                     " / " => leftOperand / rightOperand,
                     _ => leftOperand + rightOperand
                 };
+#else
+                RationalNumber result;
+                switch (op)
+                {
+                    case " - ": result = leftOperand - rightOperand; break;
+                    case " * ": result = leftOperand * rightOperand; break;
+                    case " / ": result = leftOperand / rightOperand; break;
+                    default: result = leftOperand + rightOperand; break;
+                };
+#endif
                 return result;
             }
             else

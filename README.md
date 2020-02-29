@@ -21,7 +21,7 @@ This repository contains a .NET Core command line program written in C# that wil
 
 ### Prerequistes
 
-In order to being able to run this application, .NET Core 3.0 **MUST** be installed in your computer with the `dotnet` command line tool.
+In order to being able to run this application, .NET Core 2.2 or newer **MUST** be installed in your computer with the `dotnet` command line tool.
 
 ### Running the Application
 
