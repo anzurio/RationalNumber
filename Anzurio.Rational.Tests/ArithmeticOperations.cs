@@ -112,5 +112,35 @@ namespace Anzurio.Rational.Tests
             var rhs = RationalNumber.Parse(rightHandSide);
             (lhs + rhs).ToString().Should().Be(desiredOutput);
         }
+
+        [TestCase("1", "1/2", "1/2")]
+        [TestCase("-1", "1/2", "-1_1/2")]
+        [TestCase("1", "-1/2", "1_1/2")]
+        [TestCase("-1/2", "-1/2", "0")]
+        [TestCase("1/2", "1/2", "0")]
+        [TestCase("-1/2", "1/2", "-1")]
+        [TestCase("-5_1/2", "1/2", "-6")]
+        [TestCase("-5_1/2", "-1/2", "-5")]
+        [TestCase("5_1/2", "-1/2", "6")]
+        [TestCase("3/9", "9", "-8_2/3")]
+        [TestCase("-9", "3/9", "-9_1/3")]
+        [TestCase("0", "1/2", "-1/2")]
+        [TestCase("-0/4", "1/2", "-1/2")]
+        [TestCase("-0/4", "-1/2", "1/2")]
+        [TestCase("-0/4", "-0/2", "0")]
+        [TestCase("1/100", "100/1", "-99_99/100")]
+        [TestCase("-1/100", "100/1", "-100_1/100")]
+        [TestCase("2", "5", "-3")]
+        [TestCase("-2", "5", "-7")]
+        [TestCase("1/7", "1/5", "-2/35")]
+        [TestCase("1/7", "-1/5", "12/35")]
+        [TestCase("10_1/10", "1_5/10", "8_3/5")]
+        [TestCase("10_1/10", "-1_5/10", "11_3/5")]
+        public void PerformSubstraction(string leftHandSide, string rightHandSide, string desiredOutput)
+        {
+            var lhs = RationalNumber.Parse(leftHandSide);
+            var rhs = RationalNumber.Parse(rightHandSide);
+            (lhs - rhs).ToString().Should().Be(desiredOutput);
+        }
     }
 }
