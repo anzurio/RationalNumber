@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anzurio.Rational", "Anzurio.Rational\Anzurio.Rational.csproj", "{54AAB618-470F-4776-AED8-6228AF4DF175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anzurio.Rational", "Anzurio.Rational\Anzurio.Rational.csproj", "{54AAB618-470F-4776-AED8-6228AF4DF175}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anzurio.Rational.Tests", "Anzurio.Rational.Tests\Anzurio.Rational.Tests.csproj", "{A1404ADA-6088-4B2C-96FA-5E16657B2888}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anzurio.Rational.Tests", "Anzurio.Rational.Tests\Anzurio.Rational.Tests.csproj", "{A1404ADA-6088-4B2C-96FA-5E16657B2888}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RationalNumberShell", "RationalNumberShell\RationalNumberShell.csproj", "{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{54AAB618-470F-4776-AED8-6228AF4DF175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +43,23 @@ Global
 		{A1404ADA-6088-4B2C-96FA-5E16657B2888}.Release|x64.Build.0 = Release|Any CPU
 		{A1404ADA-6088-4B2C-96FA-5E16657B2888}.Release|x86.ActiveCfg = Release|Any CPU
 		{A1404ADA-6088-4B2C-96FA-5E16657B2888}.Release|x86.Build.0 = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|x64.Build.0 = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Debug|x86.Build.0 = Debug|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|x64.ActiveCfg = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|x64.Build.0 = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{3FA8545E-29A2-4F2F-8706-DC32CCB4DCDE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32692CF4-B6A5-494B-8502-81BA48997B22}
 	EndGlobalSection
 EndGlobal

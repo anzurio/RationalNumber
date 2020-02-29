@@ -25,8 +25,10 @@ In order to being able to run this application, .NET Core **MUST** be installed 
 
 ### Running the Application
 
+In order to run the Shell Application, execute the follwing from this reposity's root folder:
+
 ```csharp
-// TODO
+> dotnet run -p RationalNumberShell/RationalNumberShell.csproj
 ```
 
 ### Running Tests
