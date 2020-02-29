@@ -82,6 +82,9 @@ namespace Anzurio.Rational.Tests
         [TestCase("1_7//8")]
         [TestCase("7//8")]
         [TestCase("_7/8")]
+        [TestCase("7_")]
+        [TestCase("7_/8")]
+        [TestCase("/8")]
         public void ParseAnInvalidFormatStringAsARationalNumber(string rationalNumber)
         {
             Action action = () => RationalNumber.Parse(rationalNumber);
