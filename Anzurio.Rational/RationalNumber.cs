@@ -105,9 +105,11 @@ namespace Anzurio.Rational
                 lhs.Denominator * rhs.Denominator);
         }
 
-        public static RationalNumber operator-(RationalNumber lhs, RationalNumber rhs)
+        public static RationalNumber operator -(RationalNumber lhs, RationalNumber rhs)
         {
-            throw new NotImplementedException();
+            return new RationalNumber(
+                (lhs.Numerator * rhs.Denominator) - (lhs.Denominator * rhs.Numerator),
+                lhs.Denominator * rhs.Denominator);
         }
 
         public static RationalNumber Parse(string s)
