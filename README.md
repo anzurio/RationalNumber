@@ -20,7 +20,7 @@ This repository contains a .NET Core command line program written in C# that wil
 
 ### Prerequistes
 
-In order to to run these projects, .NET Core 2.2 or newer **MUST** be installed in your computer along with the `dotnet` command line tool.
+In order to to run these projects, [.NET Core 2.2 or newer](https://dotnet.microsoft.com/download/dotnet-core) **MUST** be installed in your computer along with the `dotnet` command line tool.
 
 ### Running the Application
 
