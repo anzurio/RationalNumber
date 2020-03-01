@@ -16,7 +16,7 @@ namespace Anzurio.Rational.Tests
         [TestCase("-2/3 / 0/1")]
         [TestCase("3 / 0_0/1")]
         [TestCase("-1_1/1 / -0_0/1")]
-        public void AttemptToDivideByZero(string expression)
+        public void AttemptToDivideByZeroShouldThrowDivideByZeroException(string expression)
         {
             Func<RationalNumber> fx = () => RationalNumber.SolveArithmeticExpression(expression);
             fx.Should().Throw<DivideByZeroException>();
@@ -39,7 +39,7 @@ namespace Anzurio.Rational.Tests
         [TestCase("1/0")]
         [TestCase("A00")]
         [TestCase("00A")]
-        public void AttemptToSolveWithInvalidOperand(string operand)
+        public void AttemptToSolveWithInvalidOperandShouldThrowInvalidOperationException(string operand)
         {
             foreach (var op in Operators)
             {
@@ -57,7 +57,7 @@ namespace Anzurio.Rational.Tests
         [TestCase("3- 3")]
         [TestCase("3 * 4 - 4")]
         [TestCase("something")]
-        public void AttemptToSolveAnInvalidExpression(string expression)
+        public void AttemptToSolveAnInvalidExpressionShouldThrowInvalidOperationException(string expression)
         {
             Func<RationalNumber> fx = () => RationalNumber.SolveArithmeticExpression(expression);
             fx.Should().Throw<InvalidOperationException>();
@@ -152,11 +152,34 @@ namespace Anzurio.Rational.Tests
         [TestCase("1/7 -      -1/5", "12/35")]
         [TestCase("10_1/10 - 1_5/10", "8_3/5")]
         [TestCase("10_1/10 - -1_5/10", "11_3/5")]
+        [TestCase("2147483647 + 1", "2147483648")]
+        [TestCase("-2147483648 - 1", "-2147483649")]
+        [TestCase("2147483647 * 2147483647/2147483647", "2147483647")]
+        [TestCase("-2147483648 * -2147483647/2147483647", "2147483648")]
+        [TestCase("2147483647 * -2147483647/2147483647", "-2147483647")]
+        [TestCase("2147483647 / 2147483647/2147483647", "2147483647")]
+        [TestCase("-2147483648 / -2147483647/2147483647", "2147483648")]
+        [TestCase("2147483647 / -2147483647/2147483647", "-2147483647")]
+        [TestCase("2147483647 * -2", "-4294967294")]
+        [TestCase("-2147483648 / 1/2", "-4294967296")]
         public void SolveValidExpression(string expression, string desiredOutput)
         {
             RationalNumber.SolveArithmeticExpression(expression).ToString()
                 .Should()
                 .Be(desiredOutput);
+        }
+
+        [TestCase("2147483647 + 1")]
+        [TestCase("-2147483648 - 1")]
+        [TestCase("2147483647 * 2147483647/1")]
+        [TestCase("-2147483648 * -2147483647/1")]
+        [TestCase("2147483647 * -2147483647/1")]
+        [TestCase("-2147483648 / 1/2")]
+        [TestCase("2147483647 / 1/2")]
+        public void AttemptToSolveRationalNumberExpressionWhoseResultIsOutsideInt32LimitsShouldNotThrow(string expression)
+        {
+            Func<RationalNumber> fx = () => RationalNumber.SolveArithmeticExpression(expression);
+            fx.Should().NotThrow();
         }
     }
 }

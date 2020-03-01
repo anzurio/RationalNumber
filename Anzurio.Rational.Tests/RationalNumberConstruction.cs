@@ -34,8 +34,8 @@ namespace Anzurio.Rational.Tests
             int wholeNumber, 
             int numerator, 
             int denominator,
-            int expectedNumerator,
-            int expectedDenominator)
+            long expectedNumerator,
+            long expectedDenominator)
         {
             var rationalNumber = new RationalNumber(wholeNumber, numerator, denominator);
             rationalNumber.Denominator.Should().Be(expectedDenominator);
@@ -58,8 +58,8 @@ namespace Anzurio.Rational.Tests
         public void ConstructRationalNumber(
             int numerator,
             int denominator,
-            int expectedNumerator,
-            int expectedDenominator)
+            long expectedNumerator,
+            long expectedDenominator)
         {
             var rationalNumber = new RationalNumber(numerator, denominator);
             rationalNumber.Denominator.Should().Be(expectedDenominator);
@@ -67,7 +67,7 @@ namespace Anzurio.Rational.Tests
         }
 
         [TestCase]
-        public void AttemptToConstructNotANumberRationalNumber()
+        public void AttemptToConstructARationalNumberWithDenominatorZeroShouldThrowNotARationalNumber()
         {
             Action createNotANumberRational = () => new RationalNumber(1, 0);
             Action createNotANumberRationalWithWholeNumber = () => new RationalNumber(0, 1, 0);
@@ -81,7 +81,7 @@ namespace Anzurio.Rational.Tests
         [TestCase(-1, 1, -1)]
         [TestCase(-1, -1, 1)]
         [TestCase(-1, -1, -1)]
-        public void AttemptToConstructInvalidRationalNumberByRepeatedMinusSign(
+        public void AttemptToConstructInvalidRationalNumberByRepeatedMinusSignShouldThrowInvalidRationalNumber(
             int numerator,
             int denominator,
             int? wholeNumber)

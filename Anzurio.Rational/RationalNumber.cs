@@ -28,11 +28,11 @@ namespace Anzurio.Rational
         /// <summary>
         /// The numerator of the rational number.
         /// </summary>
-        public int Numerator { get; internal set; }
+        public long Numerator { get; internal set; }
         /// <summary>
         /// The denominator of the rational number.
         /// </summary>
-        public int Denominator { get; internal set; }
+        public long Denominator { get; internal set; }
 
         /// <summary>
         /// Creates a RationalNumber by providing a whole number (which may be zero) and a fraction.
@@ -43,6 +43,12 @@ namespace Anzurio.Rational
         /// <exception cref="NotARationalNumberException"><paramref name="denominator"/> is zero.</exception>
         /// <exception cref="InvalidRationalNumber">More than one of the parameters is negative.</exception>
         public RationalNumber(int whole, int numerator, int denominator)
+            : this((long)whole, (long)numerator, (long)denominator)
+        {
+
+        }
+
+        private RationalNumber(long whole, long numerator, long denominator)
         {
             if (denominator == 0)
             {
@@ -56,7 +62,7 @@ namespace Anzurio.Rational
             whole = Math.Abs(whole);
             numerator = Math.Abs(numerator);
             denominator = Math.Abs(denominator);
-            
+
             numerator += (whole * denominator);
             var greatestCommonFactor = CalculateGreatestCommonFactor(numerator, denominator);
             greatestCommonFactor = greatestCommonFactor == 0 ? 1 : greatestCommonFactor;
@@ -78,11 +84,17 @@ namespace Anzurio.Rational
 
         }
 
+        private RationalNumber(long numerator, long denominator)
+            : this(0, numerator, denominator)
+        {
+
+        }
+
         /// <summary>
         /// Creates a RationalNumber by providing a whole number.
         /// </summary>
         /// <param name="whole">A whole number.</param>
-        public RationalNumber(int whole) 
+        public RationalNumber(int whole)
             : this(whole, 1)
         {
 
@@ -135,7 +147,8 @@ namespace Anzurio.Rational
         {
             ValidateOperandsNotNullOrThrow(lhs, rhs);
             
-            return new RationalNumber(lhs.Numerator * rhs.Numerator, lhs.Denominator * rhs.Denominator);
+            return new RationalNumber(
+                checked(lhs.Numerator * rhs.Numerator), checked(lhs.Denominator * rhs.Denominator));
         }
 
         /// <summary>
@@ -156,8 +169,8 @@ namespace Anzurio.Rational
             var areBothSidesNegative = lhs.Numerator < 0 && rhs.Numerator < 0;
 
             return new RationalNumber(
-                lhs.Numerator * rhs.Denominator * (areBothSidesNegative ? -1 : 1), 
-                lhs.Denominator * rhs.Numerator * (areBothSidesNegative ? -1 : 1));
+                checked(lhs.Numerator * rhs.Denominator * (areBothSidesNegative ? -1 : 1)), 
+                checked(lhs.Denominator * rhs.Numerator * (areBothSidesNegative ? -1 : 1)));
         }
 
         /// <summary>
@@ -171,8 +184,8 @@ namespace Anzurio.Rational
         {
             ValidateOperandsNotNullOrThrow(lhs, rhs);
             return new RationalNumber(
-                (lhs.Numerator * rhs.Denominator) + (lhs.Denominator * rhs.Numerator),
-                lhs.Denominator * rhs.Denominator);
+                checked((lhs.Numerator * rhs.Denominator) + (lhs.Denominator * rhs.Numerator)),
+                checked(lhs.Denominator * rhs.Denominator));
         }
 
         /// <summary>
@@ -186,8 +199,8 @@ namespace Anzurio.Rational
         {
             ValidateOperandsNotNullOrThrow(lhs, rhs);
             return new RationalNumber(
-                (lhs.Numerator * rhs.Denominator) - (lhs.Denominator * rhs.Numerator),
-                lhs.Denominator * rhs.Denominator);
+                checked((lhs.Numerator * rhs.Denominator) - (lhs.Denominator * rhs.Numerator)),
+                checked(lhs.Denominator * rhs.Denominator));
         }
 
         /// <summary>
@@ -202,7 +215,7 @@ namespace Anzurio.Rational
         /// <returns>A Rational Number equivalent to the fraction specified in <paramref name="s"/></returns>
         /// <exception cref="ArgumentNullException"><paramref name="s"/> is null.</exception>
         /// <exception cref="FormatException"><paramref name="s"/> is not in a correct format.</exception>
-        /// <exception cref="OverflowException">Any numeric element of <paramref name="s"/> is larger than the numeric bounds.</exception>
+        /// <exception cref="OverflowException">Any numeric element of <paramref name="s"/> is less than <see cref="Int32.MinValue"/> or greater than <see cref="Int32.MaxValue"/>.</exception>
         public static RationalNumber Parse(string s)
         {
             if (s == null)
@@ -251,7 +264,7 @@ namespace Anzurio.Rational
         /// <returns>The resulting value of performing the operation.</returns>
         /// <exception cref="InvalidOperationException">A valid operator is not present or not surrounded by spaces.</exception>
         /// <exception cref="FormatException">Either operand is not in a correct format.</exception>
-        /// <exception cref="OverflowException">Any numeric component of either operand is larger than the numeric bounds.</exception>
+        /// <exception cref="OverflowException">Any numeric component of either operand is less than <see cref="Int32.MinValue"/> or greater than <see cref="Int32.MaxValue"/>.</exception>
         /// <exception cref="DivideByZeroException">The right operand is equivalent to zero.</exception>
         public static RationalNumber SolveArithmeticExpression(string expression)
         {
@@ -289,7 +302,7 @@ namespace Anzurio.Rational
             }
         }
 
-        private static int CalculateGreatestCommonFactor(int numerator, int denominator)
+        private static long CalculateGreatestCommonFactor(long numerator, long denominator)
         {
             while (numerator != 0 && denominator != 0)
             {
@@ -360,7 +373,7 @@ namespace Anzurio.Rational
             return (leftOperand, rightOperand);
         }
 
-        private static int CountNegativeNumbers(IEnumerable<int> numbers)
+        private static int CountNegativeNumbers(IEnumerable<long> numbers)
         {
             return numbers.Count(n => n < 0);
         }
