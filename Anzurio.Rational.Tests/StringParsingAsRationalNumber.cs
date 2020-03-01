@@ -32,6 +32,8 @@ namespace Anzurio.Rational.Tests
         [TestCase("-5", "-5")]
         [TestCase("2", "2")]
         [TestCase("-0", "0")]
+        [TestCase("-2147483648", "-2147483648")]
+        [TestCase("2147483647", "2147483647")]
         public void ConstructFractionFromStringParsing(string rationalNumber, string expectedResult)
         {
             var isValidFractionString = RationalNumber.TryParse(rationalNumber, out RationalNumber result);
@@ -62,7 +64,7 @@ namespace Anzurio.Rational.Tests
         }
 
         [TestCase]
-        public void ParseANullStringAsARationalNumber()
+        public void ParsingANullStringAsARationalNumberShouldThrowArgumentNullException()
         {
             Action action = () => RationalNumber.Parse(null);
             action.Should().Throw<ArgumentNullException>();
@@ -85,7 +87,7 @@ namespace Anzurio.Rational.Tests
         [TestCase("7_")]
         [TestCase("7_/8")]
         [TestCase("/8")]
-        public void ParseAnInvalidFormatStringAsARationalNumber(string rationalNumber)
+        public void ParsingAnInvalidFormatStringAsARationalNumberShouldThrowFormatException(string rationalNumber)
         {
             Action action = () => RationalNumber.Parse(rationalNumber);
             action.Should().Throw<FormatException>();
@@ -95,10 +97,22 @@ namespace Anzurio.Rational.Tests
         [TestCase("1_1/0")]
         [TestCase("5/0")]
         [TestCase("-1/0")]
-        public void ParseAnInvalidRationalNumberString(string rationalNumber)
+        public void ParsingARationalNumberWithDenominatorZeroStringShouldThrowNotARationalNumberException(string rationalNumber)
         {
             Action action = () => RationalNumber.Parse(rationalNumber);
             action.Should().Throw<NotARationalNumberException>();
+        }
+
+        [TestCase("-2147483649")]
+        [TestCase("2147483648")]
+        [TestCase("-1/2147483648")]
+        [TestCase("1/2147483648")]
+        [TestCase("-2147483649_1/2")]
+        [TestCase("2147483648_1/2")]
+        public void ParsingAnOutOfBoundsRationalStringShouldThrowOverflowException(string rationalNumber)
+        {
+            Action action = () => RationalNumber.Parse(rationalNumber);
+            action.Should().Throw<OverflowException>();
         }
     }
 }

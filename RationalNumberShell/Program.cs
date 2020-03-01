@@ -80,7 +80,8 @@ namespace RationalNumberShell
             Console.WriteLine("Remarks:");
             Console.WriteLine("For consistency to other Parse methods in .NET-based shells, 0_0/3 and 0_1/3 are valid representations of a fractions (e.g., double.Parse(\"0.0\");)");
             Console.WriteLine("To avoid ambiguity, the minus sign to represent a negative number, must always be at the beginning of the fraction.");
-            Console.WriteLine("Using a whole number and an improper fraction is valid as  3_2/3 is mathematically equivalent to 3 + 2/3 thus so would be 3_4/3.</p>");
+            Console.WriteLine("Using a whole number and an improper fraction is valid as 3_2/3 is mathematically equivalent to 3 + 2/3 thus so would be 3_4/3.</p>");
+            Console.WriteLine($"Any numeric component of the fraction must be less than or equal to {Int32.MaxValue} and greater than or equal to {Int32.MinValue}.");
             Console.ResetColor();
         }
     }
