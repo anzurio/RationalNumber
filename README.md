@@ -30,6 +30,8 @@ In order to run the Shell Application, execute the follwing from this reposity's
 > dotnet run -p RationalNumberShell/RationalNumberShell.csproj
 ```
 
+While running the application, enter `help` to get a quick guide of how to enter valid expressions. This will also be displayed after a few consecutive unsuccessful attempts at solving an equation.
+
 ### Running Tests
 
 In order to run the test cases of the solution in the command line, execute the following from this repository's root folder:

@@ -50,6 +50,8 @@ namespace RationalNumberShell
                     }
                     if (attempts >= AttemptsToDisplayHelp)
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.WriteLine("This information might be helpful:");
                         DisplayHelp();
                         attempts = 0;
                     }
